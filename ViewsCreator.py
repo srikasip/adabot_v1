@@ -104,7 +104,12 @@ class ViewerObj:
       thisProp = self.controllerDict["properties"][prop]
       if thisProp["data_type"] in au.knownTypes and thisProp["is_Array"] != True:
         returnStr += "\t\thtmlSnippet += '\\t<label class=\"form_label\" for=\"lbl_"+thisProp["name"]+"\">"+thisProp["name"]+":</label>\\n'\n"
-        returnStr += "\t\thtmlSnippet += '\\t<label class=\"data_label\" id=\"lbl_"+thisProp["name"]+"\" data-param=\""+thisProp["name"]+"\">'+return"+self.controllerDict["name"]+"."+thisProp["name"]+"+'</label>\\n'\n"
+        if thisProp["data_type"] == "string":
+          returnStr += "\t\thtmlSnippet += '\\t<label class=\"data_label\" id=\"lbl_"+thisProp["name"]+"\" data-param=\""+thisProp["name"]+"\">'+return"+self.controllerDict["name"]+"."+thisProp["name"]+"+'</label>\\n'\n"
+        else:
+          returnStr += "\t\thtmlSnippet += '\\t<label class=\"data_label\" id=\"lbl_"+thisProp["name"]+"\" data-param=\""+thisProp["name"]+"\">'+str(return"+self.controllerDict["name"]+"."+thisProp["name"]+")+'</label>\\n'\n"
+
+
         returnStr += "\t\thtmlSnippet += '\\n'\n"
 
 
@@ -161,7 +166,10 @@ class ViewerObj:
       thisProp = self.controllerDict["properties"][prop]
       if thisProp["data_type"] in au.knownTypes and thisProp["is_Array"] != True:
         returnVal += "\t\thtmlSnippet += '\\t<label class=\"form_label\" for=\"txt_"+thisProp["name"]+"\">"+thisProp["name"]+":</label>\\n'\n"
-        returnVal += "\t\thtmlSnippet += '\\t<input type=\"text\" class=\"form_text\" id=\"txt_"+thisProp["name"]+"\" data-param=\""+thisProp["name"]+"\" value=\"'+return"+self.controllerDict["name"]+"."+thisProp["name"]+"+'\" />\\n'\n"
+        if thisProp["data_type"] == "string":
+          returnVal += "\t\thtmlSnippet += '\\t<input type=\"text\" class=\"form_text\" id=\"txt_"+thisProp["name"]+"\" data-param=\""+thisProp["name"]+"\" value=\"'+return"+self.controllerDict["name"]+"."+thisProp["name"]+"+'\" />\\n'\n"
+        else:
+          returnVal += "\t\thtmlSnippet += '\\t<input type=\"text\" class=\"form_text\" id=\"txt_"+thisProp["name"]+"\" data-param=\""+thisProp["name"]+"\" value=\"'+str(return"+self.controllerDict["name"]+"."+thisProp["name"]+")+'\" />\\n'\n"
         returnVal += "\t\thtmlSnippet += '\\n'\n"
 
     returnVal += "\t\thtmlSnippet += '\\t<button id=\"btn_submit"+self.controllerDict["name"]+"\" class=\"submitButton\">Submit</button>\\n'\n"

@@ -41,11 +41,22 @@ class ObjectCreator:
 
 
     classText = ""
+    #first write all the defined classes
     for a_classDict in classesDict:
-      tempClass = classesDict[a_classDict]
+      if a_classDict in classes:
+        tempClass = classesDict[a_classDict]
 
-      classText += tempClass.getClassText()
-      classText += "\n"
+        classText += tempClass.getClassText()
+        classText += "\n"
+
+    #then write all the generated classes
+    for a_classDict in classesDict:
+      if a_classDict not in classes:
+        tempClass = classesDict[a_classDict]
+
+        classText += tempClass.getClassText()
+        classText += "\n"
+
 
     return classText
 

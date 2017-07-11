@@ -29,7 +29,8 @@ class Architect:
                   "Procfile",
                   "requirements.txt",
                   "StaticHelper.py",
-                  "webserver.py"
+                  "webserver.py",
+                  "testlauncher.py"
                 ]
 
     for root in rootFiles:
@@ -91,7 +92,7 @@ class Architect:
     dynamicServer += "\tdef PostDynamicContent(mainPath, params):\n"
 
     dynamicServer += "\t\tif mainPath == \""+classes[0].lower()+"\":\n"
-    dynamicServer += "\t\t\t"+a_class+"Obj = "+classes[0]+"ViewCont()\n"
+    dynamicServer += "\t\t\t"+classes[0]+"Obj = "+classes[0]+"ViewCont()\n"
     dynamicServer += "\t\t\tdata, content_type = DynamicHelper.LoadData("+classes[0]+"Obj, params)\n"
     for a_class in classes[1:]:
       dynamicServer += "\t\telif mainPath == \""+a_class.lower()+"\":\n"
