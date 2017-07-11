@@ -9,7 +9,7 @@ class ObjectCreator:
 
   def WriteClassFile(self):
     txtObjects = ""
-    classFile = self.appName + "/ObjectsFile.py"
+    classFile = self.appName + "/Classes/ObjectsFile.py"
 
     importTxt = self.getImportText()
     baseTxt = self.getBaseText()

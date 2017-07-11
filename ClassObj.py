@@ -24,8 +24,9 @@ class ClassObj:
     return classTxt
 
   def addUnknownArray(self, propDict1, classDict1, classDict2, classObj2):
-    pivotTableName = classDict1["name"] + classDict2["name"] + propDict1["name"] + "list"
-    pivotTable = ClassObj(pivotTableName)
+    pivotClassName = classDict1["name"] + classDict2["name"] + propDict1["name"] + "list"
+    pivotTableName = self.getTableFromClass(pivotClassName)
+    pivotTable = ClassObj(pivotClassName)
 
     pivot_props = {
       propDict1["data_type"]: {
@@ -62,7 +63,7 @@ class ClassObj:
 
   def add2ndReference(self, varName, className, pivotTableName):
     
-    self.columnDefinition += varName + " = relationship('"+className+"', secondary='"+pivotTableName+"'))\n"
+    self.columnDefinition += varName + " = relation('"+className+"', secondary='"+pivotTableName+"')\n"
 
 
   def addKnownArray(self, propDict, classDict):
@@ -120,11 +121,12 @@ class ClassObj:
         self.columnDefinition += ")\n"
         
       else:
-        dTypeClass = self.getTableFromClass(propDict["data_type"])
+        dTypeTable = self.getTableFromClass(propDict["data_type"])
+        dTypeClass = propDict["data_type"]
         backRefName = self.className
         
-        self.columnDefinition += propDict["name"] + "_id = Column(Integer, ForeignKey('" + dTypeClass+".ada_id'))\n"
-        self.columnDefinition += dTypeClass + " = relationship("+propDict["data_type"]+", backref=backref('"+backRefName+"'))\n"
+        self.columnDefinition += propDict["name"] + "_id = Column(Integer, ForeignKey('" + dTypeTable+".ada_id'))\n"
+        self.columnDefinition += dTypeClass + " = relation("+propDict["data_type"]+", backref=backref('"+backRefName+"'))\n"
   
     else:
       return False
@@ -160,4 +162,5 @@ class ClassObj:
     return reprString
 
   def getTableFromClass(self, className):
-    return className
+    tableName = "__" + className.lower() + "__"
+    return tableName

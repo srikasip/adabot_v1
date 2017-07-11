@@ -2,17 +2,23 @@ from ObjectCreator import ObjectCreator as classWriter
 from ControllerCreator import ControllerCreator as controllerCreator
 
 from ModelCreator import DataModel
+from Architect import Architect as Architect
+
 
 def main():
   appName = "TestApp"
+
+  print("Writing Project Structure")
+  architect = Architect(appName)
+  print("Finished Writing Project Structure")
+
+
 
   print("Creating the data model")
   fakeModelCreation(appName)
   print("Finished creating the data model")
 
-  #print("Writing Initializer")
-  #testInitializer = initializer(appName)
-  #print("Finished Writing Initializer")
+
 
   print("Writing Object Model File")
   testClasses = classWriter(appName)
@@ -22,6 +28,10 @@ def main():
   classFiles = controllerCreator(appName)
   print("Finished Writing Class Files")
 
+  print("Write Dynamic Page Dependencies")
+  architect.makeDynamicHelper()
+  architect.loadTemplatePages()
+  print("Finished Writing Dependencies")
   
 
 def fakeModelCreation(appName):
@@ -45,4 +55,7 @@ def fakeModelCreation(appName):
   testApp.setClassRelationship("Person", "Color", "favorite_colors", "child")
 
   testApp.writeDataModel()
+
+
+  
 if __name__ == "__main__": main()
